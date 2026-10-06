@@ -1,0 +1,68 @@
+import java.util.Scanner;
+import java.util.Random;
+public class NumberGuessingGame {
+
+    public static void main(String[] args) {
+        // Scanner is used to read input from the keyboard
+        Scanner scanner = new Scanner(System.in);
+        // Random is used to generate random numbers
+        Random random = new Random();
+
+        boolean playAgain = true;
+
+        System.out.println("==========================================");
+        System.out.println("   WELCOME TO THE NUMBER GUESSING GAME!   ");
+        System.out.println("==========================================");
+        System.out.println("I'm thinking of a number between 1 and 100.");
+        System.out.println("Can you guess what it is?\n");
+
+        while (playAgain) {
+            // Generate a random number from 1 to 100
+            int targetNumber = random.nextInt(100) + 1;
+            int attempts = 0;
+            boolean hasWon = false;
+
+            while (!hasWon) {
+                System.out.print("Enter your guess (1-100): ");
+                
+                // Validate if user entered an integer
+                if (!scanner.hasNextInt()) {
+                    System.out.println("Please enter a valid whole number!");
+                    scanner.next(); // Clear the invalid input
+                    continue;
+                }
+
+                int userGuess = scanner.nextInt();
+                attempts++;
+
+                if (userGuess < 1 || userGuess > 100) {
+                    System.out.println("Oops! Keep your guess between 1 and 100.");
+                } else if (userGuess < targetNumber) {
+                    System.out.println("Too low! Try a higher number. 🔼");
+                } else if (userGuess > targetNumber) {
+                    System.out.println("Too high! Try a lower number. 🔽");
+                } else {
+                    hasWon = true;
+                    System.out.println("\n🎉 BINGO! You guessed the number!");
+                    System.out.println("The secret number was: " + targetNumber);
+                    System.out.println("Total attempts taken: " + attempts);
+                }
+            }
+
+            // Ask if player wants to play another round
+            System.out.print("\nDo you want to play again? (yes/no): ");
+            String response = scanner.next().trim().toLowerCase();
+
+            if (!response.equals("yes") && !response.equals("y")) {
+                playAgain = false;
+                System.out.println("\nThanks for playing! Goodbye! 👋");
+            } else {
+                System.out.println("\n--- Starting a new round! ---");
+            }
+
+
+
+        }
+
+        scanner.close();
+    }
